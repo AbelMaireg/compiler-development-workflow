@@ -9,7 +9,7 @@ FLEX_OUTPUT = $(BUILD_DIR)/rules-out.yy.c
 PROGRAM_OUTPUT = $(BUILD_DIR)/$(PROGRAM)
 IMAGE_NAME = lexy
 
-all: $(PROGRAM_OUTPUT)
+all: build-up
 
 $(PROGRAM_OUTPUT): $(BISON_OUTPUT) $(FLEX_OUTPUT)
 	mkdir -p $(BUILD_DIR)
