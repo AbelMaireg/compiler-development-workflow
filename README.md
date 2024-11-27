@@ -77,8 +77,16 @@ docker build -t lexy .
 
 ### **2. Start the Container with Volume Binding**
 
+#### For Linux and MacOs users 
+
 ```bash
 docker run -it --rm -v "$(pwd)":/workspace lexy bash
+```
+
+#### For Windows users 
+
+```bash
+docker run -it --rm -v "$(PWD)":/workspace lexy bash
 ```
 
 - **Explanation**:
@@ -136,8 +144,16 @@ make clean
 
 Or, if you prefer Docker:
 
+#### For Linux and MacOs users
+
 ```bash
 docker run -it --rm -v "$(pwd)":/workspace lexy bash -c "rm -rf build"
+```
+
+#### For Windows users
+
+```bash
+docker run -it --rm -v "$(PWD)":/workspace lexy bash -c "rm -rf build"
 ```
 
 ---
