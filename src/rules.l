@@ -1,6 +1,23 @@
+%{
+#include "grammar-out.tab.h"
+%}
+
+digit   [0-9]+
+
 %%
-[0-9]+    { yylval = atoi(yytext); return NUM; }  // Return NUM token
-[ \t\n]   { /* Ignore whitespace */ }
-.         { return yytext[0]; }
+
+{digit} {
+    yylval = atoi(yytext);
+    return NUMBER;
+}
+
+[\t ]+  /* Ignore whitespace */
+\n      return '\n';
+
+.       return yytext[0];  /* Return any other character as is */
+
 %%
-int yylex(void);
+
+int yywrap() {
+    return 1;
+}

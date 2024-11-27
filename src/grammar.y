@@ -1,23 +1,40 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+
+int yylex(void);
+int yyerror(char *s);
 %}
 
-%token NUM
+%token NUMBER
+%left '+' '-'
+%left '*' '/'
 
 %%
-expr:
-    expr '+' expr      { printf("%d\n", $1 + $3); }
-  | expr '-' expr      { printf("%d\n", $1 - $3); }
-  | NUM                { $$ = $1; }
-  ;
+
+calculation:
+    calculation expression '\n' { printf("Result: %d\n", $2); }
+    | /* empty */
+    ;
+
+expression:
+    expression '+' expression { $$ = $1 + $3; }
+    | expression '-' expression { $$ = $1 - $3; }
+    | expression '*' expression { $$ = $1 * $3; }
+    | expression '/' expression { $$ = $1 / $3; }
+    | '(' expression ')' { $$ = $2; }
+    | NUMBER { $$ = $1; }
+    ;
 
 %%
-int yylex(void);
-void yyerror(const char *s) { fprintf(stderr, "%s\n", s); }
+
+int yyerror(char *s) {
+    fprintf(stderr, "Error: %s\n", s);
+    return 0;
+}
 
 int main() {
-    printf("Enter an expression: ");
+    printf("Enter an arithmetic expression:\n");
     yyparse();
     return 0;
 }
