@@ -7,13 +7,13 @@ BUILD_DIR = build
 BISON_OUT = $(BUILD_DIR)/grammar-out.tab.c
 FLEX_OUT = $(BUILD_DIR)/rules-out.yy.c
 EXECUTABLE_OUT = $(BUILD_DIR)/$(EXECUTABLE)
-IMAGE_NAME = lexy
+IMAGE_NAME = alpine-lexy
 
 all: build-up
 
 $(EXECUTABLE_OUT): $(BISON_OUT) $(FLEX_OUT)
 	mkdir -p $(BUILD_DIR)
-	gcc -o $(EXECUTABLE_OUT) $(BISON_OUT) $(FLEX_OUT) -lfl
+	gcc -o $(EXECUTABLE_OUT) $(BISON_OUT) $(FLEX_OUT)
 
 $(BISON_OUT): $(SRC_YACC)
 	mkdir -p $(BUILD_DIR)

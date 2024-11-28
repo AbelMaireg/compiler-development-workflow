@@ -1,5 +1,6 @@
-FROM debian:stable-20241111
+FROM alpine:latest
 
 WORKDIR /workspace
 
-RUN apt update && apt install bison flex vim make tree -y
+RUN apk update && apk add --no-cache \
+      bison flex gcc g++ make musl-dev vim tree
