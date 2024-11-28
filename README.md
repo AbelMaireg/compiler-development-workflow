@@ -90,17 +90,21 @@ docker run -it --rm -v "$(pwd)":/workspace lexy bash
 
 Once inside the container, run the following commands manually:
 
-| Command        | Description                                       |
-|----------------|---------------------------------------------------|
-| `make run`     | Runs the project inside the container.            |
-| `make clean`   | Cleans up the generated files and build artifacts.|
+| Command               | Description                                           |
+|-----------------------|-------------------------------------------------------|
+| `make run`            | Compiles and runs the project inside the container.   |
+| `make flex-run`       | Compiles and runs the lexical definitions only.       |
+| `make clean`          | Cleans up the generated files and build artifacts.    |
+
+- **Note**:
+  - Inside the container **Make** is installed, therefore using raw commands is unnecessary.
 
 ---
 
 ## **How It Works**
 
 1. **Building the Image**:
-   - The Dockerfile installs the necessary tools (**Bison**, **Flex**, **GCC**, etc.).
+   - The Dockerfile installs the necessary tools (**Bison**, **Flex**, **GCC**, **Make**, etc.).
    - The current directory is mounted into the container, allowing you to edit files outside the container while compiling them inside.
 
 2. **Running the Project**:
