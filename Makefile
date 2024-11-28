@@ -1,4 +1,4 @@
-PROGRAM = example
+PROGRAM = bin
 YACC_FILE = src/grammar.y
 LEX_FILE = src/rules.l
 
@@ -43,5 +43,5 @@ up:
 	docker run -it --rm -v .:/workspace $(IMAGE_NAME)
 
 build-up:
-	docker build . -t lexy
+	docker build . -t ${IMAGE_NAME}
 	docker run -it --rm -v .:/workspace $(IMAGE_NAME)
