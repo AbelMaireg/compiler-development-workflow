@@ -1,36 +1,46 @@
-PROGRAM = bin
-YACC_FILE = src/grammar.y
-LEX_FILE = src/rules.l
+EXECUTABLE = bin
+SRC_YACC = src/grammar.y
+SRC_LEX = src/rules.l
 
 BUILD_DIR = build
 
-BISON_OUTPUT = $(BUILD_DIR)/grammar-out.tab.c
-FLEX_OUTPUT = $(BUILD_DIR)/rules-out.yy.c
-PROGRAM_OUTPUT = $(BUILD_DIR)/$(PROGRAM)
+BISON_OUT = $(BUILD_DIR)/grammar-out.tab.c
+FLEX_OUT = $(BUILD_DIR)/rules-out.yy.c
+EXECUTABLE_OUT = $(BUILD_DIR)/$(EXECUTABLE)
 IMAGE_NAME = lexy
 
 all: build-up
 
-$(PROGRAM_OUTPUT): $(BISON_OUTPUT) $(FLEX_OUTPUT)
+$(EXECUTABLE_OUT): $(BISON_OUT) $(FLEX_OUT)
 	mkdir -p $(BUILD_DIR)
-	gcc -o $(PROGRAM_OUTPUT) $(BISON_OUTPUT) $(FLEX_OUTPUT) -lfl
+	gcc -o $(EXECUTABLE_OUT) $(BISON_OUT) $(FLEX_OUT) -lfl
 
-$(BISON_OUTPUT): $(YACC_FILE)
+$(BISON_OUT): $(SRC_YACC)
 	mkdir -p $(BUILD_DIR)
-	bison -d $(YACC_FILE) -o $(BISON_OUTPUT)
+	bison -d $(SRC_YACC) -o $(BISON_OUT)
 
-$(FLEX_OUTPUT): $(LEX_FILE)
+$(FLEX_OUT): $(SRC_LEX)
 	mkdir -p $(BUILD_DIR)
-	flex -o $(FLEX_OUTPUT) $(LEX_FILE)
+	flex -o $(FLEX_OUT) $(SRC_LEX)
+
+################################################################################
+# Program execution shortcuts
+################################################################################
 
 clean:
 	rm -rf $(BUILD_DIR)
 
-run: $(PROGRAM_OUTPUT)
-	$(PROGRAM_OUTPUT)
+flex-run: $(SRC_LEX)
+	mkdir -p $(BUILD_DIR)
+	flex -o $(FLEX_OUT) $(SRC_LEX)
+	gcc -o $(EXECUTABLE_OUT) $(FLEX_OUT) -lfl
+	./$(EXECUTABLE_OUT)
+
+run: $(EXECUTABLE_OUT)
+	$(EXECUTABLE_OUT)
 
 compile:
-	gcc -o $(PROGRAM_OUTPUT) $(BISON_OUTPUT) $(FLEX_OUTPUT) -lfl
+	gcc -o $(EXECUTABLE_OUT) $(BISON_OUT) $(FLEX_OUT) -lfl
 
 ################################################################################
 # Docker shortcuts
